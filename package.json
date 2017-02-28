@@ -1,11 +1,11 @@
 {
   "name": "srv-failover",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Isomorphic DNS library that returns SRV addresses with failover support",
   "main": "index.js",
   "browser": "index-webpack.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack -p",
     "test": "mocha",
     "test:watch": "mocha -w -G"
   },
