@@ -3,19 +3,26 @@
   "version": "1.0.0",
   "description": "Isomorphic DNS library that returns SRV addresses with failover support",
   "main": "index.js",
+  "browser": "index-webpack.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack -p",
+    "test": "mocha",
+    "test:watch": "mocha -w -G"
   },
   "repository": "git@github.com:octoblu/srv-failover.git",
   "author": "Octoblu <serveradmin@octoblu.com>",
   "license": "MIT",
   "dependencies": {
-    "isomorphic-dns": "^1.0.4"
+    "coffee-script": "^1.12.4",
+    "isomorphic-dns": "^1.0.4",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "coffee-loader": "^0.7.3",
-    "coffee-script": "^1.12.4",
     "mocha": "^3.2.0",
+    "sinon": "^1.17.7",
+    "sinon-chai": "^2.8.0",
     "webpack": "^2.2.1"
   }
 }

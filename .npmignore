@@ -35,6 +35,3 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
-
-/index-webpack.js
-/index-webpack.js.map

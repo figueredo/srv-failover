@@ -1,7 +1,8 @@
 module.exports = {
   entry: './src/index.js',
+  devtool: '#source-map',
   output: {
-    filename: 'index.js'
+    filename: 'index-webpack.js'
   },
   module: {
     rules: [
