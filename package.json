@@ -1,0 +1,9 @@
+{
+  "name": "srv-failover",
+  "version": "1.0.0",
+  "description": "Isomorphic DNS library that returns SRV addresses with failover support",
+  "main": "index.js",
+  "repository": "git@github.com:octoblu/srv-failover.git",
+  "author": "Octoblu <serveradmin@octoblu.com>",
+  "license": "MIT"
+}
