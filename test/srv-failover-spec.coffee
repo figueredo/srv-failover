@@ -68,6 +68,21 @@ describe 'SrvFailover', ->
         it 'should return the result with the higher priority (lower numeric value)', ->
           expect(@url).to.deep.equal 'https://there.foo.bar:443'
 
+    describe 'when constructed with urlProtocol', ->
+      beforeEach ->
+        @dns = {}
+        @sut = new SrvFailover { domain: 'bar', service: 'foo', protocol: 'https', urlProtocol: 'wss' }, {@dns}
+
+      describe 'when dns yields only one result', ->
+        beforeEach (done) ->
+          @dns.resolveSrv = sinon.stub().withArgs('_foo._https.bar').yields null, [
+            {priority: 10, weight: 5, port: 443, name: 'here.foo.bar'}
+          ]
+          @sut.resolveUrl (error, @url) => done error
+
+        it 'should return the first result, using the urlProtocol', ->
+          expect(@url).to.deep.equal 'wss://here.foo.bar:443'
+
   describe '->markBadUrl', ->
     describe 'when constructed with a fake dns', ->
       beforeEach ->

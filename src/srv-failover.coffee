@@ -9,14 +9,15 @@ _ = {
 url     = require 'url'
 
 class SrvFailover
-  constructor: ({domain, @protocol, service}, {@dns}={}) ->
+  constructor: ({domain, protocol, service, @urlProtocol}, {@dns}={}) ->
     throw new Error 'Missing required parameter: domain'   unless domain?
-    throw new Error 'Missing required parameter: protocol' unless @protocol?
+    throw new Error 'Missing required parameter: protocol' unless protocol?
     throw new Error 'Missing required parameter: service'  unless service?
 
     @badUrls = []
-    @hostname = "_#{service}._#{@protocol}.#{domain}"
+    @hostname = "_#{service}._#{protocol}.#{domain}"
     @dns ?= dns
+    @urlProtocol ?= protocol
 
   markBadUrl: (badUrl, {ttl}={}) =>
     @badUrls.push badUrl
@@ -30,7 +31,7 @@ class SrvFailover
       return callback error if error?
 
       allUrls = _.map _.sortBy(addresses, 'priority'), (address) =>
-        url.format({@protocol, hostname: address.name, port: address.port, slashes: true})
+        url.format({protocol: @urlProtocol, hostname: address.name, port: address.port, slashes: true})
 
       theUrl = _.first(_.difference(allUrls, @badUrls))
       return callback new Error('SRV record found, but contained no valid addresses') unless theUrl?
