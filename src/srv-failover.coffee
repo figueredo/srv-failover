@@ -30,7 +30,7 @@ class SrvFailover
       return callback error if error?
 
       allUrls = _.map _.sortBy(addresses, 'priority'), (address) =>
-        url.format({@protocol, hostname: address.name, port: address.port})
+        url.format({@protocol, hostname: address.name, port: address.port, slashes: true})
 
       theUrl = _.first(_.difference(allUrls, @badUrls))
       return callback new Error('SRV record found, but contained no valid addresses') unless theUrl?
