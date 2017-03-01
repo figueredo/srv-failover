@@ -102,6 +102,7 @@ describe 'SrvFailover', ->
 
           it 'should yield an error', ->
             expect(=> throw @error).to.throw('SRV record found, but contained no valid addresses')
+            expect(@error.noValidAddresses).to.be.true
 
         describe 'when dns yields two results', ->
           beforeEach (done) ->

@@ -19,6 +19,9 @@ class SrvFailover
     @dns ?= dns
     @urlProtocol ?= protocol
 
+  clearBadUrls: =>
+    @badUrls = []
+
   markBadUrl: (badUrl, {ttl}={}) =>
     @badUrls.push badUrl
     setTimeout (=> @markGoodUrl badUrl), ttl if ttl?
@@ -34,8 +37,13 @@ class SrvFailover
         url.format({protocol: @urlProtocol, hostname: address.name, port: address.port, slashes: true})
 
       theUrl = _.first(_.difference(allUrls, @badUrls))
-      return callback new Error('SRV record found, but contained no valid addresses') unless theUrl?
+      return callback @_noValidAddressesError() unless theUrl?
       callback null, theUrl
+
+  _noValidAddressesError: =>
+    error = new Error('SRV record found, but contained no valid addresses')
+    error.noValidAddresses = true
+    error
 
 
 module.exports = SrvFailover
