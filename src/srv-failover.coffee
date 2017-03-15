@@ -1,4 +1,5 @@
-dns     = require 'isomorphic-dns'
+httpDNS = require 'http-dns'
+url     = require 'url'
 _ = {
   difference:  require 'lodash/difference'
   first:       require 'lodash/first'
@@ -6,7 +7,6 @@ _ = {
   pull:        require 'lodash/pull'
   sortBy:      require 'lodash/sortBy'
 }
-url     = require 'url'
 
 class SrvFailover
   constructor: ({domain, protocol, service, @urlProtocol}, {@dns}={}) ->
@@ -16,7 +16,7 @@ class SrvFailover
 
     @badUrls = []
     @hostname = "_#{service}._#{protocol}.#{domain}"
-    @dns ?= dns
+    @dns ?= httpDNS
     @urlProtocol ?= protocol
 
   clearBadUrls: =>
